@@ -1,722 +1,741 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Network - Protect Earth</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    <title>守护自然之灵 - 野生动物保护</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        // Tailwind 配置
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2E7D32',     // 自然绿
+                        secondary: '#FF8F00',   // 暖橙
+                        dark: '#1B5E20',        // 深绿
+                        light: '#E8F5E9',       // 浅绿
+                        neutral: '#424242'      // 中性灰
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            }
+            .bg-blur {
+                backdrop-filter: blur(8px);
+            }
+            .transition-transform {
+                transition: transform 0.3s ease;
+            }
+            .hover-scale {
+                @apply hover:scale-105 transition-all duration-300;
+            }
+            .card-shadow {
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            }
         }
 
-        :root {
-            --primary: #2e7d32;
-            --secondary: #4caf50;
-            --accent: #8bc34a;
-            --light: #e8f5e9;
-            --dark: #1b5e20;
-            --text: #333333;
-            --white: #ffffff;
+        /* 全局样式 */
+        html {
+            scroll-behavior: smooth;
         }
-
+        
         body {
-            background-color: var(--light);
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        header {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: var(--white);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-
-        .logo i {
-            font-size: 2rem;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav ul li {
-            margin-left: 2rem;
-        }
-
-        nav ul li a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 0.5rem 0;
-            position: relative;
-        }
-
-        nav ul li a:hover {
-            color: var(--accent);
-        }
-
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--accent);
-            transition: width 0.3s ease;
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
-        }
-
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80');
-            background-size: cover;
-            background-position: center;
-            height: 80vh;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: var(--white);
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--accent);
-            color: var(--white);
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn:hover {
-            background-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        section {
-            padding: 5rem 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background-color: var(--accent);
-            border-radius: 2px;
-        }
-
-        .section-title p {
-            color: var(--text);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-img {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .about-img img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-
-        .about-img:hover img {
-            transform: scale(1.05);
-        }
-
-        .about-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-        }
-
-        .about-text p {
-            margin-bottom: 1.5rem;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 2rem 1rem;
-            background-color: var(--white);
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-10px);
-        }
-
-        .stat-item i {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .stat-item h3 {
-            font-size: 2.5rem;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-item p {
-            color: var(--text);
-        }
-
-        .initiatives {
-            background-color: var(--white);
-        }
-
-        .initiatives-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .initiative-card {
-            background-color: var(--light);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .initiative-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .initiative-img {
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .initiative-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .initiative-card:hover .initiative-img img {
-            transform: scale(1.1);
-        }
-
-        .initiative-content {
-            padding: 1.5rem;
-        }
-
-        .initiative-content h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-
-        .initiative-content p {
-            margin-bottom: 1.5rem;
-        }
-
-        .cta {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: var(--white);
-            text-align: center;
-            padding: 5rem 0;
-        }
-
-        .cta h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .cta p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta .btn {
-            background-color: var(--white);
-            color: var(--primary);
-        }
-
-        .cta .btn:hover {
-            background-color: var(--accent);
-            color: var(--white);
-        }
-
-        footer {
-            background-color: var(--dark);
-            color: var(--white);
-            padding: 3rem 0 1rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-column h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background-color: var(--accent);
-        }
-
-        .footer-column p {
-            margin-bottom: 1rem;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-links li a {
-            color: var(--light);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer-links li a:hover {
-            color: var(--accent);
-            padding-left: 5px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            color: var(--white);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            background-color: var(--accent);
-            transform: translateY(-5px);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .mobile-menu {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        @media (max-width: 992px) {
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .initiatives-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            nav ul {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: var(--primary);
-                flex-direction: column;
-                padding: 1rem 0;
-                text-align: center;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-            }
-            
-            nav ul.active {
-                display: flex;
-            }
-            
-            nav ul li {
-                margin: 0;
-                padding: 0.8rem 0;
-            }
-            
-            .mobile-menu {
-                display: block;
-            }
-            
-            .initiatives-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Animation for stats counter */
-        .counter {
-            transition: all 0.5s ease;
+            font-family: 'Inter', sans-serif;
+            color: #333;
+        }
+        
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #2E7D32;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1B5E20;
         }
     </style>
 </head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="container nav-container">
-            <div class="logo">
-                <i class="fas fa-seedling"></i>
-                <span>Green Network</span>
-            </div>
-            <nav>
-                <div class="mobile-menu">
-                    <i class="fas fa-bars"></i>
-                </div>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#initiatives">Initiatives</a></li>
-                    <li><a href="#get-involved">Get Involved</a></li>
-                    <li><a href="#contact">Contact</a></li>
+<body class="bg-light">
+    <!-- 导航栏 -->
+    <header class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <nav class="bg-white/90 bg-blur card-shadow">
+            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                <a href="#" class="flex items-center space-x-2">
+                    <i class="fa fa-paw text-primary text-2xl"></i>
+                    <span class="text-xl font-bold text-dark">自然之灵</span>
+                </a>
+                
+                <!-- 桌面导航 -->
+                <ul class="hidden md:flex space-x-8">
+                    <li><a href="#home" class="text-neutral hover:text-primary transition-colors">首页</a></li>
+                    <li><a href="#about" class="text-neutral hover:text-primary transition-colors">现状</a></li>
+                    <li><a href="#species" class="text-neutral hover:text-primary transition-colors">濒危物种</a></li>
+                    <li><a href="#actions" class="text-neutral hover:text-primary transition-colors">保护行动</a></li>
+                    <li><a href="#join" class="text-neutral hover:text-primary transition-colors">加入我们</a></li>
                 </ul>
-            </nav>
-        </div>
+                
+                <!-- 移动端菜单按钮 -->
+                <button class="md:hidden text-neutral text-xl" id="menuBtn">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+            
+            <!-- 移动端导航菜单 -->
+            <div class="md:hidden hidden bg-white w-full absolute left-0 top-full card-shadow" id="mobileMenu">
+                <ul class="py-2">
+                    <li><a href="#home" class="block px-4 py-2 hover:bg-light transition-colors">首页</a></li>
+                    <li><a href="#about" class="block px-4 py-2 hover:bg-light transition-colors">现状</a></li>
+                    <li><a href="#species" class="block px-4 py-2 hover:bg-light transition-colors">濒危物种</a></li>
+                    <li><a href="#actions" class="block px-4 py-2 hover:bg-light transition-colors">保护行动</a></li>
+                    <li><a href="#join" class="block px-4 py-2 hover:bg-light transition-colors">加入我们</a></li>
+                </ul>
+            </div>
+        </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container hero-content">
-            <h1>Protect Our Planet, Preserve Our Future</h1>
-            <p>Join the global movement to create a sustainable world through conservation, education, and community action.</p>
-            <a href="#get-involved" class="btn">Join Our Network</a>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <div class="section-title">
-                <h2>About Green Network</h2>
-                <p>We are a global community dedicated to environmental protection and sustainable development.</p>
-            </div>
-            <div class="about-content">
-                <div class="about-img">
-                    <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Team planting trees">
-                </div>
-                <div class="about-text">
-                    <h3>Our Mission</h3>
-                    <p>Green Network is committed to creating a sustainable future by protecting natural ecosystems, promoting renewable energy, and empowering communities to take environmental action.</p>
-                    <p>Founded in 2010, we've grown from a small grassroots organization to an international network with over 50,000 members across 120 countries.</p>
-                    <p>Our approach combines scientific research, community engagement, and policy advocacy to address the most pressing environmental challenges of our time.</p>
-                    <a href="#" class="btn">Learn More</a>
-                </div>
-            </div>
-            <div class="stats">
-                <div class="stat-item">
-                    <i class="fas fa-tree"></i>
-                    <h3 class="counter" data-target="2500000">0</h3>
-                    <p>Trees Planted</p>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-users"></i>
-                    <h3 class="counter" data-target="50000">0</h3>
-                    <p>Active Members</p>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-globe-americas"></i>
-                    <h3 class="counter" data-target="120">0</h3>
-                    <p>Countries Reached</p>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-recycle"></i>
-                    <h3 class="counter" data-target="1500">0</h3>
-                    <p>Cleanup Projects</p>
+    <!-- 英雄区 -->
+    <section id="home" class="pt-20 md:pt-0 min-h-screen flex items-center bg-cover bg-center" style="background-image: url('https://picsum.photos/id/1025/1920/1080');">
+        <div class="absolute inset-0 bg-dark/50"></div>
+        <div class="container mx-auto px-4 py-20 md:py-0 relative z-10">
+            <div class="max-w-2xl text-white">
+                <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold leading-tight text-shadow mb-4 animate-fade-in">
+                    守护野生动物 <br>
+                    <span class="text-secondary">共筑生态未来</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 text-shadow">
+                    每一个生命都值得被尊重，每一种物种都应该在自然中自由生长。
+                    加入我们，一起保护地球上的野生动物，守护生物多样性。
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#join" class="bg-primary hover:bg-dark text-white font-medium px-8 py-3 rounded-full transition-all hover-scale">
+                        立即行动
+                    </a>
+                    <a href="#about" class="bg-transparent border-2 border-white hover:bg-white/20 text-white font-medium px-8 py-3 rounded-full transition-all hover-scale">
+                        了解更多
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Initiatives Section -->
-    <section class="initiatives" id="initiatives">
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Initiatives</h2>
-                <p>Discover the key programs and projects we're implementing to protect our planet.</p>
+    <!-- 现状介绍 -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4">野生动物保护现状</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-neutral">
+                    随着人类活动的扩张，野生动物的生存环境正面临前所未有的威胁，
+                    了解现状是采取有效保护行动的第一步。
+                </p>
             </div>
-            <div class="initiatives-grid">
-                <div class="initiative-card">
-                    <div class="initiative-img">
-                        <img src="https://dialogue.earth/content/uploads/2021/04/lessons-from-the-rush-to-reforest-china-dialogue-2400x1599.jpg" alt="Reforestation">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 现状卡片1 -->
+                <div class="bg-light rounded-xl p-6 card-shadow hover-scale">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-area-chart text-primary text-2xl"></i>
                     </div>
-                    <div class="initiative-content">
-                        <h3>Global Reforestation</h3>
-                        <p>Planting millions of trees worldwide to restore ecosystems, combat climate change, and protect biodiversity.</p>
-                        <a href="#" class="btn">Learn More</a>
+                    <h3 class="text-xl font-semibold mb-3 text-dark">生存危机</h3>
+                    <p class="text-neutral">
+                        全球有超过40,000种物种面临灭绝威胁，其中25%的哺乳动物、13%的鸟类正处于濒危状态。
+                        栖息地破坏、非法捕猎、气候变化是主要威胁因素。
+                    </p>
+                </div>
+                
+                <!-- 现状卡片2 -->
+                <div class="bg-light rounded-xl p-6 card-shadow hover-scale">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-globe text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-dark">生态价值</h3>
+                    <p class="text-neutral">
+                        野生动物在生态系统中扮演着关键角色，维持着自然平衡。
+                        它们帮助授粉、控制病虫害、促进养分循环，是地球生态系统不可或缺的组成部分。
+                    </p>
+                </div>
+                
+                <!-- 现状卡片3 -->
+                <div class="bg-light rounded-xl p-6 card-shadow hover-scale">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-lightbulb-o text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-dark">保护进展</h3>
+                    <p class="text-neutral">
+                        国际社会已建立各类保护公约和保护区，超过15%的陆地和7%的海洋区域受到保护。
+                        人工繁育、栖息地恢复等措施帮助部分物种数量有所回升。
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 数据统计 -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="p-6 bg-primary/5 rounded-lg">
+                    <p class="text-4xl font-bold text-primary mb-2">1/4</p>
+                    <p class="text-neutral">哺乳动物濒临灭绝</p>
+                </div>
+                <div class="p-6 bg-primary/5 rounded-lg">
+                    <p class="text-4xl font-bold text-primary mb-2">8000+</p>
+                    <p class="text-neutral">物种已灭绝</p>
+                </div>
+                <div class="p-6 bg-primary/5 rounded-lg">
+                    <p class="text-4xl font-bold text-primary mb-2">70%</p>
+                    <p class="text-neutral">栖息地遭破坏</p>
+                </div>
+                <div class="p-6 bg-primary/5 rounded-lg">
+                    <p class="text-4xl font-bold text-primary mb-2">150+</p>
+                    <p class="text-neutral">国家签署保护公约</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 濒危物种展示 -->
+    <section id="species" class="py-20 bg-light">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4">关注濒危物种</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-neutral">
+                    这些珍贵的生命正面临灭绝的危险，需要我们的关注和保护。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 大熊猫 -->
+                <div class="bg-white rounded-xl overflow-hidden card-shadow hover-scale">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://picsum.photos/id/433/800/600" alt="大熊猫" class="w-full h-full object-cover transition-transform hover:scale-110 duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-dark">大熊猫</h3>
+                        <div class="flex items-center mb-4">
+                            <span class="text-secondary text-sm mr-2">濒危等级：</span>
+                            <span class="px-2 py-1 bg-secondary/10 text-secondary rounded text-sm">易危(VU)</span>
+                        </div>
+                        <p class="text-neutral mb-4">
+                            中国国宝，主要栖息于四川、陕西和甘肃的竹林中。由于栖息地碎片化和竹子周期性开花枯死，生存仍面临挑战。
+                        </p>
+                        <div class="flex items-center text-sm text-neutral">
+                            <i class="fa fa-users mr-2"></i>
+                            <span>现存数量：约1864只（野生）</span>
+                        </div>
                     </div>
                 </div>
-                <div class="initiative-card">
-                    <div class="initiative-img">
-                        <img src="https://images.unsplash.com/photo-1621451537084-482c73073a0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Ocean Conservation">
+                
+                <!-- 东北虎 -->
+                <div class="bg-white rounded-xl overflow-hidden card-shadow hover-scale">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://picsum.photos/id/435/800/600" alt="东北虎" class="w-full h-full object-cover transition-transform hover:scale-110 duration-500">
                     </div>
-                    <div class="initiative-content">
-                        <h3>Ocean Conservation</h3>
-                        <p>Protecting marine ecosystems, reducing plastic pollution, and promoting sustainable fishing practices.</p>
-                        <a href="#" class="btn">Learn More</a>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-dark">东北虎</h3>
+                        <div class="flex items-center mb-4">
+                            <span class="text-secondary text-sm mr-2">濒危等级：</span>
+                            <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-sm">濒危(EN)</span>
+                        </div>
+                        <p class="text-neutral mb-4">
+                            世界上最大的猫科动物，主要分布在中俄边境的森林中。非法盗猎和栖息地丧失是主要威胁因素。
+                        </p>
+                        <div class="flex items-center text-sm text-neutral">
+                            <i class="fa fa-users mr-2"></i>
+                            <span>现存数量：约50只（中国境内）</span>
+                        </div>
                     </div>
                 </div>
-                <div class="initiative-card">
-                    <div class="initiative-img">
-                        <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80" alt="Renewable Energy">
+                
+                <!-- 金丝猴 -->
+                <div class="bg-white rounded-xl overflow-hidden card-shadow hover-scale">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://picsum.photos/id/403/800/600" alt="金丝猴" class="w-full h-full object-cover transition-transform hover:scale-110 duration-500">
                     </div>
-                    <div class="initiative-content">
-                        <h3>Renewable Energy</h3>
-                        <p>Promoting solar, wind, and other clean energy sources to reduce dependence on fossil fuels.</p>
-                        <a href="#" class="btn">Learn More</a>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-dark">金丝猴</h3>
+                        <div class="flex items-center mb-4">
+                            <span class="text-secondary text-sm mr-2">濒危等级：</span>
+                            <span class="px-2 py-1 bg-orange-100 text-orange-600 rounded text-sm">濒危(EN)</span>
+                        </div>
+                        <p class="text-neutral mb-4">
+                            中国特有珍稀灵长类动物，栖息于高山森林中。栖息地破坏和人类活动干扰是主要生存威胁。
+                        </p>
+                        <div class="flex items-center text-sm text-neutral">
+                            <i class="fa fa-users mr-2"></i>
+                            <span>现存数量：约20000只</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 藏羚羊 -->
+                <div class="bg-white rounded-xl overflow-hidden card-shadow hover-scale">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://picsum.photos/id/436/800/600" alt="藏羚羊" class="w-full h-full object-cover transition-transform hover:scale-110 duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-dark">藏羚羊</h3>
+                        <div class="flex items-center mb-4">
+                            <span class="text-secondary text-sm mr-2">濒危等级：</span>
+                            <span class="px-2 py-1 bg-yellow-100 text-yellow-600 rounded text-sm">近危(NT)</span>
+                        </div>
+                        <p class="text-neutral mb-4">
+                            青藏高原特有物种，因羊绒珍贵曾遭大量盗猎。经过严格保护，种群数量已开始恢复。
+                        </p>
+                        <div class="flex items-center text-sm text-neutral">
+                            <i class="fa fa-users mr-2"></i>
+                            <span>现存数量：约30万只</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 朱鹮 -->
+                <div class="bg-white rounded-xl overflow-hidden card-shadow hover-scale">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://picsum.photos/id/440/800/600" alt="朱鹮" class="w-full h-full object-cover transition-transform hover:scale-110 duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-dark">朱鹮</h3>
+                        <div class="flex items-center mb-4">
+                            <span class="text-secondary text-sm mr-2">濒危等级：</span>
+                            <span class="px-2 py-1 bg-yellow-100 text-yellow-600 rounded text-sm">濒危(EN)</span>
+                        </div>
+                        <p class="text-neutral mb-4">
+                            曾被认为已灭绝，1981年在陕西洋县发现仅存7只。通过人工繁育和保护，现已恢复至数千只。
+                        </p>
+                        <div class="flex items-center text-sm text-neutral">
+                            <i class="fa fa-users mr-2"></i>
+                            <span>现存数量：约5000只</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 白鱀豚 -->
+                <div class="bg-white rounded-xl overflow-hidden card-shadow hover-scale">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://picsum.photos/id/442/800/600" alt="白鱀豚" class="w-full h-full object-cover transition-transform hover:scale-110 duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-dark">白鱀豚</h3>
+                        <div class="flex items-center mb-4">
+                            <span class="text-secondary text-sm mr-2">濒危等级：</span>
+                            <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded text-sm">极危(CR)</span>
+                        </div>
+                        <p class="text-neutral mb-4">
+                            中国长江特有淡水鲸类，被誉为"水中大熊猫"。由于水污染和航运干扰，已功能性灭绝。
+                        </p>
+                        <div class="flex items-center text-sm text-neutral">
+                            <i class="fa fa-users mr-2"></i>
+                            <span>现存数量：可能已灭绝</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta" id="get-involved">
-        <div class="container">
-            <h2>Join Our Global Movement</h2>
-            <p>Together, we can create a sustainable future for generations to come. Every action counts, no matter how small.</p>
-            <a href="#" class="btn">Become a Member</a>
+    <!-- 保护行动 -->
+    <section id="actions" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4">我们的保护行动</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-neutral">
+                    从政策法规到实地保护，从科学研究到公众教育，我们采取多维度的保护行动。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="md:w-1/3">
+                        <div class="bg-primary/10 rounded-xl p-6 h-full flex items-center justify-center">
+                            <i class="fa fa-shield text-primary text-5xl"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3">
+                        <h3 class="text-2xl font-semibold mb-4 text-dark">建立自然保护区</h3>
+                        <p class="text-neutral mb-4">
+                            截至目前，中国已建立各级各类自然保护区近3000个，总面积约1.7亿公顷，
+                            约占陆地国土面积的18%，有效保护了90%的陆地生态系统类型和85%的重点保护野生动物种群。
+                        </p>
+                        <ul class="space-y-2 text-neutral">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>保护关键栖息地，减少人类干扰</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>实施生态修复，恢复自然生境</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>开展科学监测，掌握物种动态</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="md:w-1/3">
+                        <div class="bg-primary/10 rounded-xl p-6 h-full flex items-center justify-center">
+                            <i class="fa fa-ban text-primary text-5xl"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3">
+                        <h3 class="text-2xl font-semibold mb-4 text-dark">打击非法贸易</h3>
+                        <p class="text-neutral mb-4">
+                            严格执行《野生动物保护法》，加强执法力度，严厉打击非法猎捕、交易、运输和食用野生动物行为。
+                            建立跨部门、跨区域执法协作机制，切断非法贸易链条。
+                        </p>
+                        <ul class="space-y-2 text-neutral">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>加强边境管控，防止跨境走私</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>开展专项整治行动，清理非法市场</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>利用科技手段，提升执法效率</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="md:w-1/3">
+                        <div class="bg-primary/10 rounded-xl p-6 h-full flex items-center justify-center">
+                            <i class="fa fa-flask text-primary text-5xl"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3">
+                        <h3 class="text-2xl font-semibold mb-4 text-dark">科学研究与繁育</h3>
+                        <p class="text-neutral mb-4">
+                            开展野生动物生态学、行为学、遗传学等基础研究，为保护决策提供科学依据。
+                            建立珍稀濒危物种繁育中心，开展人工繁育和野化放归工作，恢复野外种群。
+                        </p>
+                        <ul class="space-y-2 text-neutral">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>建立基因库，保存物种遗传资源</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>开展人工繁育，增加种群数量</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>实施野化训练，提高放归成功率</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="md:w-1/3">
+                        <div class="bg-primary/10 rounded-xl p-6 h-full flex items-center justify-center">
+                            <i class="fa fa-graduation-cap text-primary text-5xl"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3">
+                        <h3 class="text-2xl font-semibold mb-4 text-dark">公众教育与宣传</h3>
+                        <p class="text-neutral mb-4">
+                            通过多种渠道开展野生动物保护宣传教育，提高公众保护意识。
+                            推动保护理念进校园、进社区、进企业，形成全社会共同参与的良好氛围。
+                        </p>
+                        <ul class="space-y-2 text-neutral">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>开展科普活动，普及保护知识</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>利用媒体平台，传播保护理念</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>组织志愿者活动，参与保护实践</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Green Network</h3>
-                    <p>We are dedicated to protecting our planet through collaborative action, education, and sustainable solutions.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    <!-- 加入我们 -->
+    <section id="join" class="py-20 bg-primary/5">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4">加入我们 共同守护</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="max-w-2xl mx-auto text-neutral">
+                    保护野生动物需要每个人的参与，无论大小，每一份努力都能带来改变。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <!-- 方式1 -->
+                <div class="bg-white rounded-xl p-8 card-shadow hover-scale">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fa fa-heart text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-dark text-center">成为志愿者</h3>
+                    <p class="text-neutral text-center mb-6">
+                        参与实地保护、科普宣传、社区教育等志愿活动，用行动守护野生动物。
+                    </p>
+                    <div class="text-center">
+                        <a href="#" class="inline-block bg-primary hover:bg-dark text-white font-medium px-6 py-2 rounded-full transition-all">
+                            报名成为志愿者
+                        </a>
                     </div>
                 </div>
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#initiatives">Initiatives</a></li>
-                        <li><a href="#get-involved">Get Involved</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                
+                <!-- 方式2 -->
+                <div class="bg-white rounded-xl p-8 card-shadow hover-scale">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fa fa-money text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-dark text-center">捐赠支持</h3>
+                    <p class="text-neutral text-center mb-6">
+                        您的每一笔捐赠都将用于野生动物保护项目，帮助改善它们的生存环境。
+                    </p>
+                    <div class="text-center">
+                        <a href="#" class="inline-block bg-primary hover:bg-dark text-white font-medium px-6 py-2 rounded-full transition-all">
+                            立即捐赠
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 方式3 -->
+                <div class="bg-white rounded-xl p-8 card-shadow hover-scale">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fa fa-share-alt text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-dark text-center">宣传扩散</h3>
+                    <p class="text-neutral text-center mb-6">
+                        分享保护理念，带动更多人关注野生动物保护，拒绝购买野生动物制品。
+                    </p>
+                    <div class="text-center">
+                        <a href="#" class="inline-block bg-primary hover:bg-dark text-white font-medium px-6 py-2 rounded-full transition-all">
+                            分享到社交平台
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 联系表单 -->
+            <div class="max-w-3xl mx-auto bg-white rounded-xl p-8 card-shadow">
+                <h3 class="text-2xl font-semibold mb-6 text-dark text-center">联系我们</h3>
+                <form class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-neutral mb-2">姓名</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="请输入您的姓名">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-neutral mb-2">电话</label>
+                            <input type="tel" id="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="请输入您的联系电话">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-neutral mb-2">邮箱</label>
+                        <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="请输入您的邮箱地址">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-neutral mb-2">留言</label>
+                        <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="请输入您想了解的内容或建议"></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="bg-primary hover:bg-dark text-white font-medium px-8 py-3 rounded-full transition-all hover-scale">
+                            提交信息
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fa fa-paw text-secondary text-2xl"></i>
+                        <span class="text-xl font-bold">自然之灵</span>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        致力于野生动物保护，守护生物多样性，共建人与自然和谐共生的美好家园。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-secondary transition-colors">
+                            <i class="fa fa-weixin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-secondary transition-colors">
+                            <i class="fa fa-weibo text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-secondary transition-colors">
+                            <i class="fa fa-qq text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-secondary transition-colors">
+                            <i class="fa fa-envelope text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">快速链接</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-300 hover:text-white transition-colors">首页</a></li>
+                        <li><a href="#about" class="text-gray-300 hover:text-white transition-colors">保护现状</a></li>
+                        <li><a href="#species" class="text-gray-300 hover:text-white transition-colors">濒危物种</a></li>
+                        <li><a href="#actions" class="text-gray-300 hover:text-white transition-colors">保护行动</a></li>
+                        <li><a href="#join" class="text-gray-300 hover:text-white transition-colors">加入我们</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
-                    <h3>Our Programs</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Reforestation</a></li>
-                        <li><a href="#">Ocean Cleanup</a></li>
-                        <li><a href="#">Wildlife Protection</a></li>
-                        <li><a href="#">Climate Education</a></li>
-                        <li><a href="#">Sustainable Agriculture</a></li>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">相关资源</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">野生动物保护法</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">自然保护区名录</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">保护项目申请</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">科普知识库</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">志愿者手册</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
-                    <h3>Contact Us</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Copper Creek Drive, New York</p>
-                    <p><i class="fas fa-phone"></i> +1 (312) 171-0771</p>
-                    <p><i class="fas fa-envelope"></i> support@greennetwork.org</p>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">联系我们</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fa fa-map-marker mt-1 mr-2 text-secondary"></i>
+                            <span class="text-gray-300">北京市海淀区中关村南大街39855号</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-phone mt-1 mr-2 text-secondary"></i>
+                            <span class="text-gray-300">010-12345678</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-envelope mt-1 mr-2 text-secondary"></i>
+                            <span class="text-gray-300">contact@wildlife-protect.org</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-clock-o mt-1 mr-2 text-secondary"></i>
+                            <span class="text-gray-300">周一至周日 9:00-18:00</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <div class="copyright">
-                <p>&copy; 2025 Green Network. All rights reserved.</p>
+            
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
+                <p>© 2025 自然之灵 - 野生动物保护公益平台 版权所有</p>
+                <p class="mt-2">本网站仅用于公益宣传，未经许可不得商用</p>
             </div>
         </div>
     </footer>
 
+    <!-- 返回顶部按钮 -->
+    <button id="backToTop" class="fixed bottom-8 right-8 bg-primary hover:bg-dark text-white w-12 h-12 rounded-full flex items-center justify-center card-shadow transition-all hover-scale opacity-0 invisible">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript -->
     <script>
-        // Mobile Menu Toggle
-        document.querySelector('.mobile-menu').addEventListener('click', function() {
-            document.querySelector('nav ul').classList.toggle('active');
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2', 'bg-white/95');
+                navbar.classList.remove('py-3');
+                
+                // 显示返回顶部按钮
+                backToTop.classList.remove('opacity-0', 'invisible');
+                backToTop.classList.add('opacity-100', 'visible');
+            } else {
+                navbar.classList.remove('py-2', 'bg-white/95');
+                navbar.classList.add('py-3');
+                
+                // 隐藏返回顶部按钮
+                backToTop.classList.add('opacity-0', 'invisible');
+                backToTop.classList.remove('opacity-100', 'visible');
+            }
         });
-
-        // Counter Animation
-        function animateCounters() {
-            const counters = document.querySelectorAll('.counter');
-            const speed = 200; // The lower the slower
+        
+        // 移动端菜单切换
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        menuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            const icon = menuBtn.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // 点击移动端菜单项后关闭菜单
+        const mobileMenuItems = mobileMenu.querySelectorAll('a');
+        mobileMenuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                mobileMenu.classList.add('hidden');
+                const icon = menuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+        
+        // 返回顶部功能
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // 表单提交
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            counters.forEach(counter => {
-                const target = +counter.getAttribute('data-target');
-                const count = +counter.innerText;
-                
-                const inc = target / speed;
-                
-                if(count < target) {
-                    counter.innerText = Math.ceil(count + inc);
-                    setTimeout(animateCounters, 1);
-                } else {
-                    counter.innerText = target;
-                }
-            });
-        }
-
-        // Initialize counters when page loads
-        window.addEventListener('load', animateCounters);
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    document.querySelector('nav ul').classList.remove('active');
-                }
-            });
+            // 简单的表单验证
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            
+            if (!name || !phone || !email) {
+                alert('请填写完整的联系信息！');
+                return;
+            }
+            
+            // 模拟提交成功
+            alert('感谢您的留言，我们会尽快与您联系！');
+            form.reset();
         });
     </script>
 </body>
-
 </html>
